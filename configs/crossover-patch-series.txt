@@ -47,3 +47,4 @@ patches/wine-ge/ddraw-windowed-swapchain-mode-size.patch
 patches/crossover/winedmo-asf-startup-timestamp-base.patch
 patches/crossover/win32u-gdi-scaling.patch
 patches/crossover/quartz-hooked-file-reads.patch
+patches/crossover/macos-retina-dpi-defaults.patch

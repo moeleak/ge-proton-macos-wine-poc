@@ -3166,10 +3166,47 @@
         "Copyright 2008 Maarten Lankhorst",
         "Copyright 2012 Aric Stewart"
       ]
+    },
+    {
+      "patch": "patches/crossover/macos-retina-dpi-defaults.patch",
+      "source_file": "dlls/user32/sysparams.c",
+      "license": "LGPL-2.1-or-later",
+      "evidence": "file header",
+      "source_origin": "CrossOver 26.3 prepared source with the series before the retina and DPI defaults, including modification notices",
+      "source_sha256": "6107f039c7b7645e660836eda581950955dc44abeafd4961fe5d8598d4ab3332",
+      "copyright_notices": [
+        "Copyright 1994 Alexandre Julliard"
+      ]
+    },
+    {
+      "patch": "patches/crossover/macos-retina-dpi-defaults.patch",
+      "source_file": "dlls/winemac.drv/macdrv_main.c",
+      "license": "LGPL-2.1-or-later",
+      "evidence": "file header",
+      "source_origin": "CrossOver 26.3 prepared source with the series before the retina and DPI defaults, including modification notices",
+      "source_sha256": "100b00c96b220c36855ad1816dff9349f12057bd3ced928a46f7a63068de4846",
+      "copyright_notices": [
+        "Copyright 1998 Patrik Stridvall",
+        "Copyright 2000 Alexandre Julliard",
+        "Copyright 2011, 2012, 2013 Ken Thomases for CodeWeavers Inc."
+      ]
+    },
+    {
+      "patch": "patches/crossover/macos-retina-dpi-defaults.patch",
+      "source_file": "loader/wine.inf.in",
+      "license": "LGPL-2.1-or-later",
+      "evidence": "file header",
+      "source_origin": "CrossOver 26.3 prepared source with the series before the retina and DPI defaults, including modification notices",
+      "source_sha256": "825518efa630f4ee53673f34a44a4d0be149d3f29898bf3b3ec712dd87792d36",
+      "copyright_notices": [
+        "Copyright (C) 2004 Chris Morgan",
+        "Copyright (C) 2004 Brian Vincent",
+        "Copyright (C) 2004 Alexandre Julliard"
+      ]
     }
   ],
   "counts": {
-    "LGPL-2.1-or-later": 279,
+    "LGPL-2.1-or-later": 282,
     "LicenseRef-Autoconf-generated-permissive": 1,
     "GPL-2.0-only WITH Linux-syscall-note": 2
   },
@@ -3227,6 +3264,7 @@
     "patches/crossover/mf-file-scheme-url-to-path.patch": "c27ab9b6c8a01e03c6d01a3cd096d4e184b38c5f7cc93790eba63737860b13f1",
     "patches/crossover/winedmo-asf-startup-timestamp-base.patch": "bda436b77e1085944b032374c6fe844ad3a3f03cfea358c6d10dd910d42be8c4",
     "patches/crossover/win32u-gdi-scaling.patch": "1618b956a4f16a2f9581a21d8552b333a2224008175b06281b2084ac251271d6",
-    "patches/crossover/quartz-hooked-file-reads.patch": "34c263c707daea3c2ba23914183ea3ca42a92931777505b615728afb00aafa7b"
+    "patches/crossover/quartz-hooked-file-reads.patch": "34c263c707daea3c2ba23914183ea3ca42a92931777505b615728afb00aafa7b",
+    "patches/crossover/macos-retina-dpi-defaults.patch": "c046be3fe586dad2aea1ec62031bdf61c75583d386fe63f27217f3ef0d855a90"
   }
 }

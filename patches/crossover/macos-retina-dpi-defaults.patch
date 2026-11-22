@@ -1,0 +1,144 @@
+Subject: macOS: retina mode, 192 DPI and GDI scaling by default
+License: LGPL-2.1-or-later
+Modification date: 2026-11-22
+
+New prefixes are set to 192 DPI (loader/wine.inf). Without a RetinaMode setting, the
+Mac driver uses retina mode in prefixes set to a DPI of at least 192, as those are, so
+that high-DPI displays show them sharp, while prefixes set to 96 DPI, such as those made
+before, keep their size in points. DPI unaware processes use GDI scaling (see
+win32u-gdi-scaling.patch) unless their manifest sets gdiScaling or the GdiScaling value
+of HKCU\Software\Wine is off, so that their GDI drawing, menus and text included, is
+rasterized at the scale of a high-DPI display rather than stretched; at 96 DPI it draws
+at a scale of 1, as before.
+
+diff --git a/dlls/user32/sysparams.c b/dlls/user32/sysparams.c
+index 50f12ca..55ffdbb 100644
+--- a/dlls/user32/sysparams.c
++++ b/dlls/user32/sysparams.c
+@@ -156,17 +156,35 @@ void release_display_dc( HDC hdc )
+     LeaveCriticalSection( &display_dc_section );
+ }
+ 
+-static BOOL get_manifest_gdi_scaling(void)
++/* Whether a DPI unaware process uses GDI scaling: as its manifest's gdiScaling says, or else,
++ * unless the GdiScaling value of HKCU\Software\Wine turns it off, it does, so that high-DPI
++ * displays show its GDI drawing sharp. At 96 DPI it draws at a scale of 1 anyway. */
++static BOOL get_gdi_scaling(void)
+ {
+     WCHAR buffer[16];
++    DWORD size, type;
++    BOOL ret = TRUE;
++    HKEY hkey;
+ 
+     /* the null terminator is written even when the size doesn't account for it */
+-    if (!QueryActCtxSettingsW( 0, NULL, L"http://schemas.microsoft.com/SMI/2017/WindowsSettings",
+-                               L"gdiScaling", buffer, ARRAY_SIZE(buffer) - 1, NULL ))
+-        return FALSE;
++    if (QueryActCtxSettingsW( 0, NULL, L"http://schemas.microsoft.com/SMI/2017/WindowsSettings",
++                              L"gdiScaling", buffer, ARRAY_SIZE(buffer) - 1, NULL ))
++    {
++        TRACE( "got gdiScaling=%s\n", debugstr_w(buffer) );
++        return !wcsicmp( buffer, L"true" );
++    }
+ 
+-    TRACE( "got gdiScaling=%s\n", debugstr_w(buffer) );
+-    return !wcsicmp( buffer, L"true" );
++    if (!RegOpenKeyExW( HKEY_CURRENT_USER, L"Software\\Wine", 0, KEY_QUERY_VALUE, &hkey ))
++    {
++        size = sizeof(buffer) - sizeof(WCHAR);
++        if (!RegQueryValueExW( hkey, L"GdiScaling", NULL, &type, (BYTE *)buffer, &size ) && type == REG_SZ && size)
++        {
++            buffer[size / sizeof(WCHAR)] = 0;
++            ret = !!wcschr( L"yYtT1", buffer[0] );
++        }
++        RegCloseKey( hkey );
++    }
++    return ret;
+ }
+ 
+ /***********************************************************************
+@@ -193,7 +211,7 @@ void SYSPARAMS_Init(void)
+     }
+ 
+     /* gdiScaling only applies to DPI unaware processes */
+-    gdi_scaling = get_manifest_gdi_scaling();
++    gdi_scaling = get_gdi_scaling();
+     unaware = gdi_scaling ? DPI_AWARENESS_CONTEXT_UNAWARE_GDISCALED : DPI_AWARENESS_CONTEXT_UNAWARE;
+ 
+     if (QueryActCtxSettingsW( 0, NULL, L"http://schemas.microsoft.com/SMI/2016/WindowsSettings",
+diff --git a/dlls/winemac.drv/macdrv_main.c b/dlls/winemac.drv/macdrv_main.c
+index 56e7a77..a2dca00 100644
+--- a/dlls/winemac.drv/macdrv_main.c
++++ b/dlls/winemac.drv/macdrv_main.c
+@@ -242,6 +242,42 @@ ULONG query_reg_value(HKEY hkey, const WCHAR *name, KEY_VALUE_PARTIAL_INFORMATIO
+ }
+ 
+ 
++/***********************************************************************
++ *              get_prefix_dpi
++ *
++ * The DPI the prefix is set to: the user's, or else the system's, as
++ * win32u reads it.
++ */
++static UINT get_prefix_dpi(void)
++{
++    static const WCHAR log_pixelsW[] = {'L','o','g','P','i','x','e','l','s',0};
++    static const char fonts_key[] =
++        "\\Registry\\Machine\\System\\CurrentControlSet\\Hardware Profiles\\Current\\Software\\Fonts";
++    char buffer[FIELD_OFFSET(KEY_VALUE_PARTIAL_INFORMATION, Data[sizeof(DWORD)])];
++    KEY_VALUE_PARTIAL_INFORMATION *value = (void *)buffer;
++    WCHAR fonts_keyW[ARRAY_SIZE(fonts_key)];
++    UINT dpi = 0, i;
++    HKEY hkey;
++
++    if ((hkey = open_hkcu_key("Control Panel\\Desktop")))
++    {
++        if (query_reg_value(hkey, log_pixelsW, value, sizeof(buffer)) == sizeof(DWORD) && value->Type == REG_DWORD)
++            dpi = *(const DWORD *)value->Data;
++        NtClose(hkey);
++    }
++
++    for (i = 0; i < ARRAY_SIZE(fonts_key); i++) fonts_keyW[i] = (unsigned char)fonts_key[i];
++    if (!dpi && (hkey = reg_open_key(NULL, fonts_keyW, (ARRAY_SIZE(fonts_key) - 1) * sizeof(WCHAR))))
++    {
++        if (query_reg_value(hkey, log_pixelsW, value, sizeof(buffer)) == sizeof(DWORD) && value->Type == REG_DWORD)
++            dpi = *(const DWORD *)value->Data;
++        NtClose(hkey);
++    }
++
++    return dpi ? dpi : USER_DEFAULT_SCREEN_DPI;
++}
++
++
+ /***********************************************************************
+  *              get_config_key
+  *
+@@ -393,6 +429,13 @@ static void setup_options(void)
+        processes in the prefix. */
+     if (!get_config_key(hkey, NULL, "RetinaMode", buffer, sizeof(buffer)))
+         retina_enabled = IS_OPTION_TRUE(buffer[0]);
++    else
++    {
++        /* Without a RetinaMode setting, use retina mode in prefixes set to a high DPI, as new
++           ones are (loader/wine.inf), so that high-DPI displays show them sharp, while those
++           set to 96 DPI keep their size in points. */
++        retina_enabled = get_prefix_dpi() >= 2 * USER_DEFAULT_SCREEN_DPI;
++    }
+ 
+     retina_on = retina_enabled;
+ 
+diff --git a/loader/wine.inf.in b/loader/wine.inf.in
+index 3dc97bb..c47f580 100644
+--- a/loader/wine.inf.in
++++ b/loader/wine.inf.in
+@@ -522,7 +522,9 @@ HKLM,%FontSubStr%,"Times New Roman CE,238",,"Times New Roman,238"
+ HKLM,%FontSubStr%,"Times New Roman CYR,204",,"Times New Roman,204"
+ HKLM,%FontSubStr%,"Times New Roman Greek,161",,"Times New Roman,161"
+ HKLM,%FontSubStr%,"Times New Roman TUR,162",,"Times New Roman,162"
+-HKLM,System\CurrentControlSet\Hardware Profiles\Current\Software\Fonts,"LogPixels",0x10003,0x00000060
++;; 192 DPI in new prefixes, for which the Mac driver also uses retina mode (see setup_options
++;; in winemac.drv), so that high-DPI displays show them sharp; existing ones keep theirs.
++HKLM,System\CurrentControlSet\Hardware Profiles\Current\Software\Fonts,"LogPixels",0x10003,0x000000c0
+ 
+ [MCI]
+ HKLM,%Mci32Str%,"AVIVideo",,"mciavi32.dll"
