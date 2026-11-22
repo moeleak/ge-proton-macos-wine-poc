@@ -2870,10 +2870,306 @@
       "copyright_notices": [
         "Copyright 2024 Rémi Bernon for CodeWeavers"
       ]
+    },
+    {
+      "patch": "patches/crossover/win32u-gdi-scaling.patch",
+      "source_file": "dlls/kernel32/tests/actctx.c",
+      "license": "LGPL-2.1-or-later",
+      "evidence": "file header",
+      "source_origin": "CrossOver 26.3 prepared source with the series before GDI scaling, including modification notices",
+      "source_sha256": "21f0f71b0c8b5f1b881352fffadb24608e5ac7588a3b8308ba7e6534f4d907da",
+      "copyright_notices": [
+        "Copyright 2007 Jacek Caban for CodeWeavers"
+      ]
+    },
+    {
+      "patch": "patches/crossover/win32u-gdi-scaling.patch",
+      "source_file": "dlls/user32/sysparams.c",
+      "license": "LGPL-2.1-or-later",
+      "evidence": "file header",
+      "source_origin": "CrossOver 26.3 prepared source with the series before GDI scaling, including modification notices",
+      "source_sha256": "9e7fbb4b5d9bb6d7b2a542cedaa345c82e89119aeada9fb4eadaf391cc849160",
+      "copyright_notices": [
+        "Copyright 1994 Alexandre Julliard"
+      ]
+    },
+    {
+      "patch": "patches/crossover/win32u-gdi-scaling.patch",
+      "source_file": "dlls/user32/tests/dce.c",
+      "license": "LGPL-2.1-or-later",
+      "evidence": "file header",
+      "source_origin": "CrossOver 26.3 prepared source with the series before GDI scaling, including modification notices",
+      "source_sha256": "d778d7cbb7b4c881ab34b0088f886a162b6adfb5393842557b7ec92e7bcf494b",
+      "copyright_notices": [
+        "Copyright 2005 Alexandre Julliard"
+      ]
+    },
+    {
+      "patch": "patches/crossover/win32u-gdi-scaling.patch",
+      "source_file": "dlls/user32/tests/sysparams.c",
+      "license": "LGPL-2.1-or-later",
+      "evidence": "file header",
+      "source_origin": "CrossOver 26.3 prepared source with the series before GDI scaling, including modification notices",
+      "source_sha256": "ee982cd9e226041e57b5674c96b258a271603f37be65161ef0e94a76b46eeb1b",
+      "copyright_notices": [
+        "Copyright 2002 Andriy Palamarchuk"
+      ]
+    },
+    {
+      "patch": "patches/crossover/win32u-gdi-scaling.patch",
+      "source_file": "dlls/win32u/bitblt.c",
+      "license": "LGPL-2.1-or-later",
+      "evidence": "file header",
+      "source_origin": "CrossOver 26.3 prepared source with the series before GDI scaling, including modification notices",
+      "source_sha256": "5e6bd329706069f7e754f012e7959bf716053080fb9639c5bdc426e9fc5113d8",
+      "copyright_notices": [
+        "Copyright 1993, 1994 Alexandre Julliard"
+      ]
+    },
+    {
+      "patch": "patches/crossover/win32u-gdi-scaling.patch",
+      "source_file": "dlls/win32u/clipping.c",
+      "license": "LGPL-2.1-or-later",
+      "evidence": "file header",
+      "source_origin": "CrossOver 26.3 prepared source with the series before GDI scaling, including modification notices",
+      "source_sha256": "cdb45595ab6dc3c5f51dc64a5911789034af47ad51a5e3e7c7288484ab1c9bb2",
+      "copyright_notices": [
+        "Copyright 1993 Alexandre Julliard"
+      ]
+    },
+    {
+      "patch": "patches/crossover/win32u-gdi-scaling.patch",
+      "source_file": "dlls/win32u/dc.c",
+      "license": "LGPL-2.1-or-later",
+      "evidence": "file header",
+      "source_origin": "CrossOver 26.3 prepared source with the series before GDI scaling, including modification notices",
+      "source_sha256": "140f705f8d355a7baaffcd9e37d4b13f3435f2f886a0a00f27a98d80c71a4c39",
+      "copyright_notices": [
+        "Copyright 1993 Alexandre Julliard"
+      ]
+    },
+    {
+      "patch": "patches/crossover/win32u-gdi-scaling.patch",
+      "source_file": "dlls/win32u/dce.c",
+      "license": "LGPL-2.1-or-later",
+      "evidence": "file header",
+      "source_origin": "CrossOver 26.3 prepared source with the series before GDI scaling, including modification notices",
+      "source_sha256": "1dedb1cb9914584fc2769e65eacf9e070314c2d72ea47cdbdc60b7f48edbc7ae",
+      "copyright_notices": [
+        "Copyright 1993, 1994, 1995, 2001, 2004, 2005, 2008 Alexandre Julliard",
+        "Copyright 1996, 1997, 1999 Alex Korobka"
+      ]
+    },
+    {
+      "patch": "patches/crossover/win32u-gdi-scaling.patch",
+      "source_file": "dlls/win32u/dib.c",
+      "license": "LGPL-2.1-or-later",
+      "evidence": "file header",
+      "source_origin": "CrossOver 26.3 prepared source with the series before GDI scaling, including modification notices",
+      "source_sha256": "9660b154708b6ac123d52bc115ca155fcb73a3513b4f6d8bf5cfe3d1f75b5ef4",
+      "copyright_notices": [
+        "Copyright 1993,1994 Alexandre Julliard"
+      ]
+    },
+    {
+      "patch": "patches/crossover/win32u-gdi-scaling.patch",
+      "source_file": "dlls/win32u/dibdrv/bitblt.c",
+      "license": "LGPL-2.1-or-later",
+      "evidence": "file header",
+      "source_origin": "CrossOver 26.3 prepared source with the series before GDI scaling, including modification notices",
+      "source_sha256": "f6e10d740700f1d5acb13731734e45f62b9944542ccfdcc6fa799e9af4769f45",
+      "copyright_notices": [
+        "Copyright 2011 Huw Davies"
+      ]
+    },
+    {
+      "patch": "patches/crossover/win32u-gdi-scaling.patch",
+      "source_file": "dlls/win32u/dibdrv/dc.c",
+      "license": "LGPL-2.1-or-later",
+      "evidence": "file header",
+      "source_origin": "CrossOver 26.3 prepared source with the series before GDI scaling, including modification notices",
+      "source_sha256": "048535f8d0cef0eb75301b018511d29e6cc47117d47aa21eb59da6c28ac868f4",
+      "copyright_notices": [
+        "Copyright 2011 Huw Davies"
+      ]
+    },
+    {
+      "patch": "patches/crossover/win32u-gdi-scaling.patch",
+      "source_file": "dlls/win32u/dibdrv/dibdrv.h",
+      "license": "LGPL-2.1-or-later",
+      "evidence": "file header",
+      "source_origin": "CrossOver 26.3 prepared source with the series before GDI scaling, including modification notices",
+      "source_sha256": "2f65b5ad9c51d6181d199b7c08f9fa6eafdb1e3a80c6f171f2549bf4cbf5a39e",
+      "copyright_notices": [
+        "Copyright 2011 Huw Davies"
+      ]
+    },
+    {
+      "patch": "patches/crossover/win32u-gdi-scaling.patch",
+      "source_file": "dlls/win32u/dibdrv/graphics.c",
+      "license": "LGPL-2.1-or-later",
+      "evidence": "file header",
+      "source_origin": "CrossOver 26.3 prepared source with the series before GDI scaling, including modification notices",
+      "source_sha256": "1e58a3272e3bf58791f16bf0ce04e37fe05061adc663e894b8edf228e8ed2049",
+      "copyright_notices": [
+        "Copyright 2011 Huw Davies"
+      ]
+    },
+    {
+      "patch": "patches/crossover/win32u-gdi-scaling.patch",
+      "source_file": "dlls/win32u/dibdrv/objects.c",
+      "license": "LGPL-2.1-or-later",
+      "evidence": "file header",
+      "source_origin": "CrossOver 26.3 prepared source with the series before GDI scaling, including modification notices",
+      "source_sha256": "0019d161d596b034bac6d4973f7aa890d24ce8c3f438928dfd6ddd2404b711a3",
+      "copyright_notices": [
+        "Copyright 2011 Huw Davies"
+      ]
+    },
+    {
+      "patch": "patches/crossover/win32u-gdi-scaling.patch",
+      "source_file": "dlls/win32u/font.c",
+      "license": "LGPL-2.1-or-later",
+      "evidence": "file header",
+      "source_origin": "CrossOver 26.3 prepared source with the series before GDI scaling, including modification notices",
+      "source_sha256": "62360bcc3ba3dff258b6b6f6af525285232daccca7067419e3599880ac79fbae",
+      "copyright_notices": [
+        "Copyright 1993 Alexandre Julliard",
+        "Copyright 2002,2003 Shachar Shemesh"
+      ]
+    },
+    {
+      "patch": "patches/crossover/win32u-gdi-scaling.patch",
+      "source_file": "dlls/win32u/freetype.c",
+      "license": "LGPL-2.1-or-later",
+      "evidence": "file header",
+      "source_origin": "CrossOver 26.3 prepared source with the series before GDI scaling, including modification notices",
+      "source_sha256": "ff1ae95d1525bc2e82f9080c7c2650d2631a9ae78d23eeeb04db07b2b09c34c7",
+      "copyright_notices": [
+        "Copyright 2001 Huw D M Davies for CodeWeavers.",
+        "Copyright 2006 Dmitry Timoshkov for CodeWeavers."
+      ]
+    },
+    {
+      "patch": "patches/crossover/win32u-gdi-scaling.patch",
+      "source_file": "dlls/win32u/mapping.c",
+      "license": "LGPL-2.1-or-later",
+      "evidence": "file header",
+      "source_origin": "CrossOver 26.3 prepared source with the series before GDI scaling, including modification notices",
+      "source_sha256": "9ee5e4fdf25cbe8b13b425588aa5bd41a0a6d6617ca0c0ce69b50f8395225d93",
+      "copyright_notices": [
+        "Copyright 1993 Alexandre Julliard"
+      ]
+    },
+    {
+      "patch": "patches/crossover/win32u-gdi-scaling.patch",
+      "source_file": "dlls/win32u/ntgdi_private.h",
+      "license": "LGPL-2.1-or-later",
+      "evidence": "file header",
+      "source_origin": "CrossOver 26.3 prepared source with the series before GDI scaling, including modification notices",
+      "source_sha256": "7095b2b5e1cefd081b0dc47d2ef856fa8a518ae1291d96f374a2c60dd96b0877",
+      "copyright_notices": [
+        "Copyright 1993 Alexandre Julliard"
+      ]
+    },
+    {
+      "patch": "patches/crossover/win32u-gdi-scaling.patch",
+      "source_file": "dlls/win32u/opentype.c",
+      "license": "LGPL-2.1-or-later",
+      "evidence": "file header",
+      "source_origin": "CrossOver 26.3 prepared source with the series before GDI scaling, including modification notices",
+      "source_sha256": "b63433d99c6f8ee749bfcd76e7415b79ed7168d23c09b89f098c0d1a39d09304",
+      "copyright_notices": [
+        "Copyright 2020 Rémi Bernon for CodeWeavers",
+        "Copyright 2014 Aric Stewart for CodeWeavers"
+      ]
+    },
+    {
+      "patch": "patches/crossover/win32u-gdi-scaling.patch",
+      "source_file": "dlls/win32u/region.c",
+      "license": "LGPL-2.1-or-later",
+      "evidence": "file header",
+      "source_origin": "CrossOver 26.3 prepared source with the series before GDI scaling, including modification notices",
+      "source_sha256": "5dc525867d05674b20f78d9568ebd61c81b6ac2c7fb9920c603c759de95c9f3d",
+      "copyright_notices": [
+        "Copyright 1993, 1994, 1995 Alexandre Julliard",
+        "Copyright (c) 1987, 1988 X Consortium",
+        "Copyright 1987, 1988 by Digital Equipment Corporation, Maynard, Massachusetts."
+      ]
+    },
+    {
+      "patch": "patches/crossover/win32u-gdi-scaling.patch",
+      "source_file": "dlls/win32u/sysparams.c",
+      "license": "LGPL-2.1-or-later",
+      "evidence": "file header",
+      "source_origin": "CrossOver 26.3 prepared source with the series before GDI scaling, including modification notices",
+      "source_sha256": "75972d262c1cd38a8b94eb77178ee2f2ba2c5e1bef434694a6aad879a6864e3e",
+      "copyright_notices": [
+        "Copyright 1994 Alexandre Julliard",
+        "Copyright 2019 Zhiyi Zhang for CodeWeavers",
+        "Copyright 2021 Jacek Caban for CodeWeavers"
+      ]
+    },
+    {
+      "patch": "patches/crossover/win32u-gdi-scaling.patch",
+      "source_file": "dlls/win32u/win32u_private.h",
+      "license": "LGPL-2.1-or-later",
+      "evidence": "file header",
+      "source_origin": "CrossOver 26.3 prepared source with the series before GDI scaling, including modification notices",
+      "source_sha256": "d164720c74864b88c0276c55042e85a33a5e94fba5f680cca4c45ca61df3fc5d",
+      "copyright_notices": [
+        "Copyright 2021 Jacek Caban for CodeWeavers"
+      ]
+    },
+    {
+      "patch": "patches/crossover/win32u-gdi-scaling.patch",
+      "source_file": "dlls/win32u/window.c",
+      "license": "LGPL-2.1-or-later",
+      "evidence": "file header",
+      "source_origin": "CrossOver 26.3 prepared source with the series before GDI scaling, including modification notices",
+      "source_sha256": "15c930cd9d475d53efad7a4e90c5f2578cb693f8a3de1f07da2851d9aeca62ca",
+      "copyright_notices": [
+        "Copyright 1993, 1994 Alexandre Julliard"
+      ]
+    },
+    {
+      "patch": "patches/crossover/win32u-gdi-scaling.patch",
+      "source_file": "include/ntuser.h",
+      "license": "LGPL-2.1-or-later",
+      "evidence": "file header",
+      "source_origin": "CrossOver 26.3 prepared source with the series before GDI scaling, including modification notices",
+      "source_sha256": "2c4ec5c490f6039a60cbe318ed6bd71a07452a84633c9a4ecb5a70359b09c6f0",
+      "copyright_notices": [
+        "Copyright 2021 Jacek Caban for CodeWeavers"
+      ]
+    },
+    {
+      "patch": "patches/crossover/quartz-hooked-file-reads.patch",
+      "source_file": "dlls/quartz/filesource.c",
+      "license": "LGPL-2.1-or-later",
+      "evidence": "file header",
+      "source_origin": "CrossOver 26.3 prepared source with the series before hooked file reads, including modification notices",
+      "source_sha256": "ad5f5413acb83f6ff9429c1be3c6319062353f4ab786d9d22a0899e39ac93552",
+      "copyright_notices": [
+        "Copyright 2003 Robert Shearman"
+      ]
+    },
+    {
+      "patch": "patches/crossover/quartz-hooked-file-reads.patch",
+      "source_file": "dlls/quartz/vmr7.c",
+      "license": "LGPL-2.1-or-later",
+      "evidence": "file header",
+      "source_origin": "CrossOver 26.3 prepared source with the series before hooked file reads, including modification notices",
+      "source_sha256": "3c46c05221f885f7d94bd2ff9b496afdcb01b9c2d4037c3495025518f0f0c9d3",
+      "copyright_notices": [
+        "Copyright 2004 Christian Costa",
+        "Copyright 2008 Maarten Lankhorst",
+        "Copyright 2012 Aric Stewart"
+      ]
     }
   ],
   "counts": {
-    "LGPL-2.1-or-later": 252,
+    "LGPL-2.1-or-later": 279,
     "LicenseRef-Autoconf-generated-permissive": 1,
     "GPL-2.0-only WITH Linux-syscall-note": 2
   },
@@ -2929,6 +3225,8 @@
     "patches/crossover/winedmo-threaded-video-convert.patch": "cdc70cd92ddd6aeb2c432c4d37564ca32a6a828d69352f709b47514287133cd7",
     "patches/crossover/mfreadwrite-downstream-format-propagation.patch": "6b2868aba005d6dbceb7db2c2721bb04b46046105251e137d0b914ca855c115a",
     "patches/crossover/mf-file-scheme-url-to-path.patch": "c27ab9b6c8a01e03c6d01a3cd096d4e184b38c5f7cc93790eba63737860b13f1",
-    "patches/crossover/winedmo-asf-startup-timestamp-base.patch": "bda436b77e1085944b032374c6fe844ad3a3f03cfea358c6d10dd910d42be8c4"
+    "patches/crossover/winedmo-asf-startup-timestamp-base.patch": "bda436b77e1085944b032374c6fe844ad3a3f03cfea358c6d10dd910d42be8c4",
+    "patches/crossover/win32u-gdi-scaling.patch": "1618b956a4f16a2f9581a21d8552b333a2224008175b06281b2084ac251271d6",
+    "patches/crossover/quartz-hooked-file-reads.patch": "34c263c707daea3c2ba23914183ea3ca42a92931777505b615728afb00aafa7b"
   }
 }
