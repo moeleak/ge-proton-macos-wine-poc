@@ -55,7 +55,10 @@ for name in sorted(paths):
             else:
                 text = prefix + text
         elif file.suffix == '.rgs':
-            text = '// ' + notice + '\n' + text
+            # The ATL registrar has no comment syntax: a notice line makes it
+            # reject the whole script, and the DLL's DllRegisterServer fail.
+            # The manifest below still records the file.
+            pass
         elif file.name.endswith('.inf.in'):
             text = '; ' + notice + '\n' + text
         elif file.name == 'MAINTAINERS':

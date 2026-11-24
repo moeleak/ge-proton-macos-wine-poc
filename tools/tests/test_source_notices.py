@@ -42,6 +42,22 @@ class SourceNoticeTests(unittest.TestCase):
                 self.assertIn('/* GE macOS Wine PoC modification notice:', text)
                 self.assertNotIn('# GE macOS', text)
 
+    def test_registrar_scripts_stay_parseable(self):
+        with tempfile.TemporaryDirectory() as temp:
+            source = Path(temp)
+            original = "HKCR\n{\n    NoRemove 'Media Type'\n    {\n    }\n}\n"
+            (source / 'winedmo.rgs').write_text(original)
+            patch = source / 'changes.patch'
+            patch.write_text('+++ b/winedmo.rgs\n')
+            subprocess.run([sys.executable, str(ROOT / 'scripts/source-notices.py'),
+                            '--source', str(source), '--patch', str(patch)],
+                           check=True, capture_output=True)
+            # The ATL registrar has no comment syntax, so the script must
+            # still begin with its root key.
+            self.assertEqual((source / 'winedmo.rgs').read_text(), original)
+            manifest = json.loads((source / 'MODIFICATIONS.json').read_text())
+            self.assertEqual([record['file'] for record in manifest['files']], ['winedmo.rgs'])
+
     def test_linux_notices_preserve_authors_and_refresh_shared_hashes(self):
         with tempfile.TemporaryDirectory() as temp:
             source = Path(temp)
