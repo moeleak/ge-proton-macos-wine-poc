@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
 	<key>downloadURL</key>
-	<string>https://github.com/moeleak/ge-proton-macos-wine-poc/releases/download/v0.1.12-macos15.2/Libraries.tar.gz</string>
+	<string>https://github.com/moeleak/ge-proton-macos-wine-poc/releases/download/v0.1.12-macos15.3/Libraries.tar.gz</string>
 	<key>dxvkVersion</key>
 	<string>1.10.3</string>
 	<key>gptkCapable</key>
 	<true/>
 	<key>sha256</key>
-	<string>d7e8772c799b7a175574945a5e301526cf88435d2328e0a1317866e8e6df63c3</string>
+	<string>670cffc978ee5fca53c42bcbbe8191f713180c55b62e9f40d44cc4dbace5d16f</string>
 	<key>version</key>
 	<dict>
 		<key>major</key>
@@ -17,7 +17,7 @@
 		<key>minor</key>
 		<integer>15</integer>
 		<key>patch</key>
-		<integer>11</integer>
+		<integer>15</integer>
 	</dict>
 </dict>
 </plist>
