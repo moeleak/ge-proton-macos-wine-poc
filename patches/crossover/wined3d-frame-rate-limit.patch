@@ -1,0 +1,119 @@
+Subject: wined3d: optional frame rate limit
+License: LGPL-2.1-or-later
+Modification date: 2026-11-25
+
+Games that present as fast as they can, as many visual novels do, keep a CPU
+core busy and run the battery down, since the Mac driver's OpenGL swap does not
+wait for the display. WINE_D3D_FRAME_RATE=<fps>, or the frame_rate_limit value
+of WINE_D3D_CONFIG or HKCU\Software\Wine\Direct3D, has wined3d_swapchain_present()
+sleep on the application thread until the next frame is due, which covers d3d8,
+d3d9, DirectDraw flips and wined3d's d3d10/11. 0 or no setting keeps presents
+unthrottled. The cadence stays steady, and restarts after a stall rather than
+catching up with a burst of frames. DXVK_FRAME_RATE does the same for DXVK.
+
+diff --git a/dlls/wined3d/swapchain.c b/dlls/wined3d/swapchain.c
+index a70832c..0ff6ad7 100644
+--- a/dlls/wined3d/swapchain.c
++++ b/dlls/wined3d/swapchain.c
+@@ -211,6 +211,38 @@ void CDECL wined3d_swapchain_set_window(struct wined3d_swapchain *swapchain, HWN
+         WARN("Failed to retrieve device context, trying swapchain backup.\n");
+ }
+ 
++/* Sleep on the application thread until the next frame is due, so a game
++ * that renders as fast as it can does not keep a CPU core busy. */
++static void wined3d_swapchain_limit_frame_rate(struct wined3d_swapchain *swapchain)
++{
++    unsigned int fps = wined3d_settings.frame_rate_limit;
++    LARGE_INTEGER freq, now, timeout;
++    LONGLONG interval, next;
++
++    if (!fps)
++        return;
++
++    QueryPerformanceFrequency(&freq);
++    interval = freq.QuadPart / fps;
++    QueryPerformanceCounter(&now);
++    next = swapchain->next_present_time;
++
++    if (next > now.QuadPart)
++    {
++        timeout.QuadPart = -((next - now.QuadPart) * 10000000 / freq.QuadPart);
++        if (timeout.QuadPart)
++            NtDelayExecution(FALSE, &timeout);
++        now.QuadPart = next;
++    }
++
++    /* Keep a steady cadence, but don't let a long stall (loading, a hidden
++     * window) turn into a burst of unthrottled frames afterwards. */
++    if (next && now.QuadPart - next < interval)
++        swapchain->next_present_time = next + interval;
++    else
++        swapchain->next_present_time = now.QuadPart + interval;
++}
++
+ HRESULT CDECL wined3d_swapchain_present(struct wined3d_swapchain *swapchain,
+         const RECT *src_rect, const RECT *dst_rect, HWND dst_window_override,
+         unsigned int swap_interval, uint32_t flags)
+@@ -225,6 +257,8 @@ HRESULT CDECL wined3d_swapchain_present(struct wined3d_swapchain *swapchain,
+     if (flags)
+         FIXME("Ignoring flags %#x.\n", flags);
+ 
++    wined3d_swapchain_limit_frame_rate(swapchain);
++
+     wined3d_mutex_lock();
+ 
+     if (!swapchain->back_buffers)
+diff --git a/dlls/wined3d/wined3d_main.c b/dlls/wined3d/wined3d_main.c
+index b40ea08..9a0be80 100644
+--- a/dlls/wined3d/wined3d_main.c
++++ b/dlls/wined3d/wined3d_main.c
+@@ -490,6 +490,28 @@ static BOOL wined3d_dll_init(HINSTANCE hInstDLL)
+             ERR_(winediag)("Using the HLSL-based FFP backend.\n");
+             wined3d_settings.ffp_hlsl = tmpvalue;
+         }
++        if (!get_config_key_dword(hkey, appkey, env, "frame_rate_limit", &wined3d_settings.frame_rate_limit)
++                && wined3d_settings.frame_rate_limit)
++            ERR_(winediag)("Limiting the frame rate to %u fps.\n", wined3d_settings.frame_rate_limit);
++    }
++
++    /* WINE_D3D_FRAME_RATE=<fps> caps presents per second, like DXVK_FRAME_RATE;
++     * 0 removes the limit. It takes precedence over frame_rate_limit. */
++    if ((env = getenv("WINE_D3D_FRAME_RATE")) && *env)
++    {
++        char *end;
++        unsigned long fps = strtoul(env, &end, 10);
++
++        if (end != env && !*end && fps <= 1000)
++        {
++            wined3d_settings.frame_rate_limit = fps;
++            if (fps)
++                ERR_(winediag)("Limiting the frame rate to %lu fps.\n", fps);
++        }
++        else
++        {
++            ERR_(winediag)("Ignoring invalid WINE_D3D_FRAME_RATE %s.\n", debugstr_a(env));
++        }
+     }
+ 
+     if (appkey) RegCloseKey( appkey );
+diff --git a/dlls/wined3d/wined3d_private.h b/dlls/wined3d/wined3d_private.h
+index 71c7d52..1cf3215 100644
+--- a/dlls/wined3d/wined3d_private.h
++++ b/dlls/wined3d/wined3d_private.h
+@@ -493,6 +493,7 @@ struct wined3d_settings
+     bool check_float_constants;
+     bool cb_access_map_w;
+     bool ffp_hlsl;
++    unsigned int frame_rate_limit;
+ };
+ 
+ extern struct wined3d_settings wined3d_settings;
+@@ -4127,6 +4128,8 @@ struct wined3d_swapchain
+     /* Performance tracking */
+     LARGE_INTEGER last_present_time;
+     LONG prev_time, frames;
++    /* Earliest time of the next present under the frame rate limit. */
++    LONGLONG next_present_time;
+ 
+     struct wined3d_swapchain_state state;
+     HWND win_handle;

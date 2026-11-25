@@ -3203,10 +3203,55 @@
         "Copyright (C) 2004 Brian Vincent",
         "Copyright (C) 2004 Alexandre Julliard"
       ]
+    },
+    {
+      "patch": "patches/crossover/wined3d-frame-rate-limit.patch",
+      "source_file": "dlls/wined3d/swapchain.c",
+      "license": "LGPL-2.1-or-later",
+      "evidence": "file header",
+      "source_origin": "CrossOver 26.3 prepared source with the series before the frame rate limit, including modification notices",
+      "source_sha256": "53d5f7f82747dc3d11eeb6ef6a0fe4a151e2c8bc6b7ddd54d8fc8ef96ed57f79",
+      "copyright_notices": [
+        "Copyright 2002-2003 Jason Edmeades",
+        "Copyright 2002-2003 Raphael Junqueira",
+        "Copyright 2005 Oliver Stieber",
+        "Copyright 2007-2008 Stefan Dösinger for CodeWeavers",
+        "Copyright 2011 Henri Verbeet for CodeWeavers"
+      ]
+    },
+    {
+      "patch": "patches/crossover/wined3d-frame-rate-limit.patch",
+      "source_file": "dlls/wined3d/wined3d_main.c",
+      "license": "LGPL-2.1-or-later",
+      "evidence": "file header",
+      "source_origin": "CrossOver 26.3 prepared source with the series before the frame rate limit, including modification notices",
+      "source_sha256": "90f3826df4f3cbf8653a5d16ecd4a0922b4e3fa2c10dfcc5b06b0ae1c3add5db",
+      "copyright_notices": [
+        "Copyright 2002-2003 The wine-d3d team",
+        "Copyright 2002-2003 Raphael Junqueira",
+        "Copyright 2004      Jason Edmeades",
+        "Copyright 2007-2008 Stefan Dösinger for CodeWeavers",
+        "Copyright 2009 Henri Verbeet for CodeWeavers"
+      ]
+    },
+    {
+      "patch": "patches/crossover/wined3d-frame-rate-limit.patch",
+      "source_file": "dlls/wined3d/wined3d_private.h",
+      "license": "LGPL-2.1-or-later",
+      "evidence": "file header",
+      "source_origin": "CrossOver 26.3 prepared source with the series before the frame rate limit, including modification notices",
+      "source_sha256": "c8750a0778e0cfbadb0eeb5a2027ecb2e898655e2c7d7b3a4109d1ee5782f327",
+      "copyright_notices": [
+        "Copyright 2002-2003 The wine-d3d team",
+        "Copyright 2002-2003 Raphael Junqueira",
+        "Copyright 2002-2003, 2004 Jason Edmeades",
+        "Copyright 2005 Oliver Stieber",
+        "Copyright 2006-2011, 2013 Stefan Dösinger for CodeWeavers"
+      ]
     }
   ],
   "counts": {
-    "LGPL-2.1-or-later": 282,
+    "LGPL-2.1-or-later": 285,
     "LicenseRef-Autoconf-generated-permissive": 1,
     "GPL-2.0-only WITH Linux-syscall-note": 2
   },
@@ -3265,6 +3310,7 @@
     "patches/crossover/winedmo-asf-startup-timestamp-base.patch": "bda436b77e1085944b032374c6fe844ad3a3f03cfea358c6d10dd910d42be8c4",
     "patches/crossover/win32u-gdi-scaling.patch": "1618b956a4f16a2f9581a21d8552b333a2224008175b06281b2084ac251271d6",
     "patches/crossover/quartz-hooked-file-reads.patch": "34c263c707daea3c2ba23914183ea3ca42a92931777505b615728afb00aafa7b",
-    "patches/crossover/macos-retina-dpi-defaults.patch": "c046be3fe586dad2aea1ec62031bdf61c75583d386fe63f27217f3ef0d855a90"
+    "patches/crossover/macos-retina-dpi-defaults.patch": "c046be3fe586dad2aea1ec62031bdf61c75583d386fe63f27217f3ef0d855a90",
+    "patches/crossover/wined3d-frame-rate-limit.patch": "01f476038471d6b8a06a7804628dadae7c84416c73881cc52cba12af78a74c60"
   }
 }
